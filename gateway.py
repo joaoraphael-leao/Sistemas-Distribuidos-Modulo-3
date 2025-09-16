@@ -1,5 +1,4 @@
-from flask import Flask, request, jsonify
-import requests
+from config import create_app, request, jsonify, requests
 
 app = Flask(__name__)
 
@@ -9,9 +8,9 @@ def home():
 
 @app.route('/gateway/cursos', methods=['GET'])
 def cursos():
-    response = requests.get('http://127.0.0.1:5001/cursos')
-    print("RESPOSTA ", response.json())
-    return response.json()
+    response = request
+    .get('http://127.0.0.1:5001/cursos')
+     return response.json()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
