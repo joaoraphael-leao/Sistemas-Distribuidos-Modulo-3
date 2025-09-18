@@ -1,6 +1,5 @@
 from config import create_app, request, jsonify, requests
 from flask import Flask
-
 app = Flask(__name__)
 
 @app.route('/gateway', methods=['GET'])
@@ -42,6 +41,7 @@ def notificacoes():
 def pagamentos():
     response = requests.get('http://127.0.0.1:5007/pagamentos')
     return response.json()
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

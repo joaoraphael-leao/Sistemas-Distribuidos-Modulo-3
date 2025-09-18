@@ -21,10 +21,11 @@ def ver_inscricoes_do_usuario(id_usuario):
             {
                 "id": 1,
                 "nome": "Curso 1"
-            }
+            }   
         ]
     }
     return jsonify(message)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port = port)
