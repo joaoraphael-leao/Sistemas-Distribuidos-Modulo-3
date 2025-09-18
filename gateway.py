@@ -15,7 +15,7 @@ def cpar():
 @app.route('/gateway/cursos', methods=['GET'])
 def cursos():
     response = requests.get('http://127.0.0.1:5002/cursos')
-     return response.json()
+    return response.json()
 
 @app.route('/gateway/chatbot', methods=['GET'])
 def chatbot():
