@@ -32,24 +32,39 @@ def consumir_midia_curso(id_curso):
     midia_curso = requisicao_servico_midia_conteudo["midia_curso"]
     return jsonify(midia_curso)
 
-@app.route("/cursos/tirar_duvida/<id_curso>", methods=['GET'])
+@app.route("/cursos/tirar_duvida/<id_curso>", methods=['POST'])
 def tirar_duvida(id_curso):
+    try:
+        payload = request.json
+        
+        # Validação do payload
+        if not payload:
+            return jsonify({"erro": "Payload JSON é obrigatório"}), 400
+            
+        aula_contexto = payload.get('aula_contexto')
+        duvida = payload.get('duvida')
+        
+        # Validação dos campos obrigatórios
+        if not duvida:
+            return jsonify({"erro": "Campo 'duvida' é obrigatório"}), 400
+            
+        if not aula_contexto:
+            return jsonify({"erro": "Campo 'aula_contexto' é obrigatório"}), 400
 
-    # id_curso já está disponível como parâmetro da função
+        body = {
+            'aula_contexto': aula_contexto,
+            'duvida': duvida
+        }
+        
+        response = requests.post("http://localhost:5003/chatbot/duvida", json=body)
 
-    aula_contexto = "Aula de Python Condicionais"
-    duvida = "Como fazer um if else em Python?"
-
-    body = {
-        'aula_contexto': aula_contexto,
-        'duvida': duvida
-    }
-    
-    response = requests.post("http://localhost:5003/chatbot/duvida", json=body)
-
-    resposta_duvida = response.json()
-    print(resposta_duvida)
-    return jsonify(resposta_duvida)
+        resposta_duvida = response.json()
+        print(resposta_duvida)
+        return jsonify(resposta_duvida)
+        
+    except Exception as e:
+        print(f"Erro no endpoint /cursos/tirar_duvida: {str(e)}")
+        return jsonify({"erro": "Erro interno do servidor"}), 500
 
 @app.route("/cursos/enviar_notificacao/<id_usuario>", methods=['GET'])
 def enviar_notificacao(id_usuario):
