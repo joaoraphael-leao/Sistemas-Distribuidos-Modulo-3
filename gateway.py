@@ -9,12 +9,12 @@ def home():
 
 @app.route('/gateway/cpar', methods=['GET'])
 def cpar():
-    response = requests.get('http://127.0.0.1:5001/cpar')
+    response = requests.get('http://127.0.0.1:5002/cpar')
     return response.json()
 
 @app.route('/gateway/cursos', methods=['GET'])
 def cursos():
-    response = requests.get('http://127.0.0.1:5002/cursos')
+    response = requests.get('http://127.0.0.1:5001/cursos')
     return response.json()
 
 @app.route('/gateway/chatbot', methods=['GET'])
