@@ -16,8 +16,8 @@ port = 5003
 
 @app.route('/chatbot', methods=['GET'])
 def chatbot():
-    message = "Servico de Chatbot Conectado -> Endpoint GET /cursos"
-    return jsonify(GEMINI_API_KEY)
+    message = "Servico de Chatbot Conectado -> Endpoint GET /chatbot"
+    return jsonify(message)
 
 
 @app.route('/chatbot/duvida', methods=['POST'])

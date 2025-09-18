@@ -24,7 +24,7 @@ def ver_inscricoes_do_usuario(id_usuario):
             }   
         ]
     }
-    return jsonify(message)
+    return jsonify(response)
 
 @app.route("/cursos/consumir_midia_curso/<id_curso>")
 def consumir_midia_curso(id_curso):

@@ -12,7 +12,7 @@ def midia_conteudo():
     return jsonify(message)
 
 @app.route('/midia_conteudo/<id_curso>', methods=['GET'])
-def midia_conteudo_curso():
+def midia_conteudo_curso(id_curso):
     response = {
         "message": "Servico de Midia e Conteudo Conectado -> Endpoint GET /midia_conteudo/" + id_curso,
         "midia_curso": {
