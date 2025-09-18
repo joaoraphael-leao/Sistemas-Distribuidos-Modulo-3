@@ -63,6 +63,19 @@ def enviar_notificacao(id_usuario):
         "notificacao_servico": notificacao_response
     })
 
+@app.route("/cursos/notificar_agendamento/<id_agendamento>", methods=['GET'])
+def notificar_agendamento(id_agendamento):
+    message = "Servico de Cursos notificando agendamento " + id_agendamento
+    
+    response = requests.get("http://localhost:5006/notificacoes")
+    notificacao_response = response.json()
+    
+    return jsonify({
+        "message": message,
+        "id_agendamento": id_agendamento,
+        "notificacao_servico": notificacao_response
+    })
+
 
 if __name__ == '__main__':
     app.run(debug=True, port = port)
