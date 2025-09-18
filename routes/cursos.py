@@ -51,6 +51,18 @@ def tirar_duvida(id_curso):
     print(resposta_duvida)
     return jsonify(resposta_duvida)
 
+@app.route("/cursos/enviar_notificacao/<id_usuario>", methods=['GET'])
+def enviar_notificacao(id_usuario):
+    message = "Servico de Cursos enviando notificacao para usuario " + id_usuario
+    
+    response = requests.get("http://localhost:5006/notificacoes")
+    notificacao_response = response.json()
+    
+    return jsonify({
+        "message": message,
+        "notificacao_servico": notificacao_response
+    })
+
 
 if __name__ == '__main__':
     app.run(debug=True, port = port)
