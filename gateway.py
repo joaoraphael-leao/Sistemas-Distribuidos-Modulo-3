@@ -42,6 +42,10 @@ def pagamentos():
     response = requests.get('http://127.0.0.1:5007/pagamentos')
     return response.json()
 
+@app.route('/gateway/midia_conteudo', methods=['GET'])
+def midia_conteudo():
+    response = requests.get('http://127.0.0.1:5008/midia_conteudo')
+    return response.json()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
