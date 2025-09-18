@@ -57,5 +57,18 @@ def call_gemini_api(duvida, aula_contexto):
         print(f"Erro na API do Gemini: {str(e)}")
         return f"Erro ao processar a dúvida: {str(e)}"
 
+@app.route('/chatbot/registrar_metricas/<id_interacao>', methods=['GET'])
+def registrar_metricas(id_interacao):
+    message = "Servico de Chatbot registrando metricas da interacao " + id_interacao
+    
+    response = requests.get("http://localhost:5005/insights")
+    insights_response = response.json()
+    
+    return jsonify({
+        "message": message,
+        "id_interacao": id_interacao,
+        "insights_servico": insights_response
+    })
+
 if __name__ == '__main__':
     app.run(debug=True, port=port)
