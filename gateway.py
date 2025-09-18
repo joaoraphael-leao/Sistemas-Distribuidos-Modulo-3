@@ -1,4 +1,5 @@
 from config import create_app, request, jsonify, requests
+from flask import Flask
 
 app = Flask(__name__)
 
