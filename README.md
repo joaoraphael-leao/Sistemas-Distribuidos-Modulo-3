@@ -4,6 +4,25 @@ Sistema moderno baseado em gRPC com Protocol Buffers, migrado de implementação
 
 ---
 
+## 🎤 **DOCUMENTAÇÃO DE APRESENTAÇÃO**
+
+### **Para Apresentar o Projeto:**
+- 📖 **[ROTEIRO_APRESENTACAO_2PCS.md](ROTEIRO_APRESENTACAO_2PCS.md)** - Roteiro completo para apresentação com 2 computadores
+- 📋 **[GUIA_APRESENTACAO.md](GUIA_APRESENTACAO.md)** - Guia detalhado de apresentação
+- ⚡ **[COMANDOS_RAPIDOS.md](COMANDOS_RAPIDOS.md)** - Comandos rápidos para consulta
+- 📊 **[DIAGRAMA_APRESENTACAO.md](DIAGRAMA_APRESENTACAO_md)** - Diagramas visuais da arquitetura
+
+### **Colas para Impressão:**
+- 🖥️ **[PC1_COLA.md](PC1_COLA.md)** - Cola para PC do servidor
+- 💻 **[PC2_COLA.md](PC2_COLA.md)** - Cola para PC do cliente
+- ✅ **[CHECKLIST_DIA_APRESENTACAO.md](CHECKLIST_DIA_APRESENTACAO.md)** - Checklist completo
+
+### **Testes Manuais:**
+- 📁 **[cliente/](cliente/)** - Pasta com todos os testes individuais
+- 📖 **[cliente/README.md](cliente/README.md)** - Documentação dos testes
+
+---
+
 ## � **VISÃO GERAL DO PROJETO**
 
 ### **Contexto**
