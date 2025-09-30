@@ -11,9 +11,9 @@ from grpc_services import services_pb2
 from grpc_services import services_pb2_grpc
 
 class InsightsServiceServicer(services_pb2_grpc.InsightsServiceServicer):
-    def GetStatus(self, request, context):
+    def GetInsightsStatus(self, request, context):
         return services_pb2.StatusResponse(
-            message="Servico de Insights conectado via gRPC -> Endpoint GetStatus"
+            message="Servico de Insights conectado via gRPC -> Endpoint GetInsightsStatus"
         )
 
 def serve():

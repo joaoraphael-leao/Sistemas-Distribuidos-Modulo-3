@@ -20,9 +20,9 @@ gemini.configure(api_key=GEMINI_API_KEY)
 model = gemini.GenerativeModel("gemini-2.0-flash")
 
 class ChatbotServiceServicer(services_pb2_grpc.ChatbotServiceServicer):
-    def GetStatus(self, request, context):
+    def GetChatbotStatus(self, request, context):
         return services_pb2.StatusResponse(
-            message="Servico de Chatbot conectado via gRPC -> Endpoint GetStatus"
+            message="Servico de Chatbot conectado via gRPC -> Endpoint GetChatbotStatus"
         )
     
     def ResolveDuvida(self, request, context):

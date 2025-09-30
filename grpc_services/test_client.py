@@ -23,7 +23,7 @@ class GRPCClient:
         
         # Teste 1: Status
         try:
-            response = self.cursos_stub.GetStatus(services_pb2.Empty())
+            response = self.cursos_stub.GetCursosStatus(services_pb2.Empty())
             print(f"Status: {response.message}")
         except grpc.RpcError as e:
             print(f"Erro no status: {e}")
@@ -54,7 +54,7 @@ class GRPCClient:
         
         # Teste 1: Status
         try:
-            response = self.chatbot_stub.GetStatus(services_pb2.Empty())
+            response = self.chatbot_stub.GetChatbotStatus(services_pb2.Empty())
             print(f"Status: {response.message}")
         except grpc.RpcError as e:
             print(f"Erro no status: {e}")
@@ -83,7 +83,7 @@ class GRPCClient:
         
         # Teste 1: Status
         try:
-            response = self.cpar_stub.GetStatus(services_pb2.Empty())
+            response = self.cpar_stub.GetCPARStatus(services_pb2.Empty())
             print(f"Status: {response.message}")
         except grpc.RpcError as e:
             print(f"Erro no status: {e}")

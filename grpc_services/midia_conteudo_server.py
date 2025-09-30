@@ -11,9 +11,9 @@ from grpc_services import services_pb2
 from grpc_services import services_pb2_grpc
 
 class MidiaConteudoServiceServicer(services_pb2_grpc.MidiaConteudoServiceServicer):
-    def GetStatus(self, request, context):
+    def GetMidiaStatus(self, request, context):
         return services_pb2.StatusResponse(
-            message="Servico de Midia e Conteudo conectado via gRPC -> Endpoint GetStatus"
+            message="Servico de Midia e Conteudo conectado via gRPC -> Endpoint GetMidiaStatus"
         )
     
     def GetMedia(self, request, context):

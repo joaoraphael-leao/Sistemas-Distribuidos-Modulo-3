@@ -33,42 +33,42 @@ class GatewayService:
     
     def call_cursos_status(self):
         try:
-            response = self.cursos_stub.GetStatus(services_pb2.Empty())
+            response = self.cursos_stub.GetCursosStatus(services_pb2.Empty())
             return response.message
         except grpc.RpcError as e:
             return f"Erro ao conectar com Cursos: {e.details()}"
     
     def call_chatbot_status(self):
         try:
-            response = self.chatbot_stub.GetStatus(services_pb2.Empty())
+            response = self.chatbot_stub.GetChatbotStatus(services_pb2.Empty())
             return response.message
         except grpc.RpcError as e:
             return f"Erro ao conectar com Chatbot: {e.details()}"
     
     def call_cpar_status(self):
         try:
-            response = self.cpar_stub.GetStatus(services_pb2.Empty())
+            response = self.cpar_stub.GetCPARStatus(services_pb2.Empty())
             return response.message
         except grpc.RpcError as e:
             return f"Erro ao conectar com CPAR: {e.details()}"
     
     def call_notificacoes_status(self):
         try:
-            response = self.notificacoes_stub.GetStatus(services_pb2.Empty())
+            response = self.notificacoes_stub.GetNotificacoesStatus(services_pb2.Empty())
             return response.message
         except grpc.RpcError as e:
             return f"Erro ao conectar com Notificações: {e.details()}"
     
     def call_insights_status(self):
         try:
-            response = self.insights_stub.GetStatus(services_pb2.Empty())
+            response = self.insights_stub.GetInsightsStatus(services_pb2.Empty())
             return response.message
         except grpc.RpcError as e:
             return f"Erro ao conectar com Insights: {e.details()}"
     
     def call_midia_status(self):
         try:
-            response = self.midia_stub.GetStatus(services_pb2.Empty())
+            response = self.midia_stub.GetMidiaStatus(services_pb2.Empty())
             return response.message
         except grpc.RpcError as e:
             return f"Erro ao conectar com Mídia: {e.details()}"

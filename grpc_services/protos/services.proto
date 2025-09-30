@@ -90,7 +90,7 @@ message NotifyScheduleResponse {
 
 // Serviços gRPC
 service CursosService {
-  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetCursosStatus(Empty) returns (StatusResponse);
   rpc GetUserCourses(GetUserCoursesRequest) returns (GetUserCoursesResponse);
   rpc GetCourseMedia(GetCourseMediaRequest) returns (GetCourseMediaResponse);
   rpc AskQuestion(AskQuestionRequest) returns (AskQuestionResponse);
@@ -98,33 +98,33 @@ service CursosService {
 }
 
 service ChatbotService {
-  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetChatbotStatus(Empty) returns (StatusResponse);
   rpc ResolveDuvida(ChatbotDuvidaRequest) returns (ChatbotDuvidaResponse);
   rpc RegisterMetrics(RegisterMetricsRequest) returns (RegisterMetricsResponse);
 }
 
 service CPARService {
-  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetCPARStatus(Empty) returns (StatusResponse);
   rpc NotifySchedule(NotifyScheduleRequest) returns (NotifyScheduleResponse);
 }
 
 service NotificacoesService {
-  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetNotificacoesStatus(Empty) returns (StatusResponse);
 }
 
 service InsightsService {
-  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetInsightsStatus(Empty) returns (StatusResponse);
 }
 
 service IdentidadeService {
-  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetIdentidadeStatus(Empty) returns (StatusResponse);
 }
 
 service PagamentosService {
-  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetPagamentosStatus(Empty) returns (StatusResponse);
 }
 
 service MidiaConteudoService {
-  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetMidiaStatus(Empty) returns (StatusResponse);
   rpc GetMedia(GetCourseMediaRequest) returns (GetCourseMediaResponse);
 }

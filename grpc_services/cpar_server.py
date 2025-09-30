@@ -11,9 +11,9 @@ from grpc_services import services_pb2
 from grpc_services import services_pb2_grpc
 
 class CPARServiceServicer(services_pb2_grpc.CPARServiceServicer):
-    def GetStatus(self, request, context):
+    def GetCPARStatus(self, request, context):
         return services_pb2.StatusResponse(
-            message="Servico de CPAR conectado via gRPC -> Endpoint GetStatus"
+            message="Servico de CPAR conectado via gRPC -> Endpoint GetCPARStatus"
         )
     
     def NotifySchedule(self, request, context):

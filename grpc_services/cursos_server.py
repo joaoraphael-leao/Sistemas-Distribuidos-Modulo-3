@@ -15,9 +15,9 @@ import requests
 from config import create_app
 
 class CursosServiceServicer(services_pb2_grpc.CursosServiceServicer):
-    def GetStatus(self, request, context):
+    def GetCursosStatus(self, request, context):
         return services_pb2.StatusResponse(
-            message="Servico de Cursos conectado via gRPC -> Endpoint GetStatus"
+            message="Servico de Cursos conectado via gRPC -> Endpoint GetCursosStatus"
         )
     
     def GetUserCourses(self, request, context):

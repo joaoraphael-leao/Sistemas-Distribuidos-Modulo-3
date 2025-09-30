@@ -13,7 +13,7 @@ from grpc_services import services_pb2
 from grpc_services import services_pb2_grpc
 
 class SimpleServiceServicer(services_pb2_grpc.CursosServiceServicer):
-    def GetStatus(self, request, context):
+    def GetCursosStatus(self, request, context):
         return services_pb2.StatusResponse(
             message="✅ Serviço gRPC funcionando! Rede corporativa OK!"
         )

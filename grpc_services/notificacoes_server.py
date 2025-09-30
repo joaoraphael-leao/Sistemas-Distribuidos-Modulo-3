@@ -11,9 +11,9 @@ from grpc_services import services_pb2
 from grpc_services import services_pb2_grpc
 
 class NotificacoesServiceServicer(services_pb2_grpc.NotificacoesServiceServicer):
-    def GetStatus(self, request, context):
+    def GetNotificacoesStatus(self, request, context):
         return services_pb2.StatusResponse(
-            message="Servico de Notificacoes conectado via gRPC -> Endpoint GetStatus"
+            message="Servico de Notificacoes conectado via gRPC -> Endpoint GetNotificacoesStatus"
         )
 
 def serve():

@@ -25,7 +25,7 @@ def test_connection():
             stub = services_pb2_grpc.CursosServiceStub(channel)
             
             # Testar com timeout de 5 segundos
-            response = stub.GetStatus(
+            response = stub.GetCursosStatus(
                 services_pb2.Empty(), 
                 timeout=5
             )
