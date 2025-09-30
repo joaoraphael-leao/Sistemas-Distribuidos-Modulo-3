@@ -182,11 +182,30 @@ pip install grpcio grpcio-tools google-generativeai protobuf==3.20.3
 ```
 
 ### **Configuração da IA Gemini (Opcional):**
+
+#### **Passo 1: Criar arquivo .env**
+Crie um arquivo chamado `.env` na raiz do projeto:
 ```bash
-# Criar arquivo .env
-echo "GEMINI_API_KEY=sua_chave_aqui" > .env
+# Windows (PowerShell)
+New-Item -Path .env -ItemType File
+
+# Linux/Mac/Git Bash
+touch .env
 ```
-*Sem a chave, o chatbot funciona em modo simulação*
+
+#### **Passo 2: Adicionar a chave da API**
+Edite o arquivo `.env` e adicione:
+```
+GEMINI_API_KEY=sua_chave_api_aqui
+```
+
+#### **Como obter a chave:**
+1. Acesse: https://makersuite.google.com/app/apikey
+2. Faça login com sua conta Google
+3. Clique em "Create API Key"
+4. Copie a chave gerada e cole no arquivo `.env`
+
+**⚠️ IMPORTANTE:** Sem a chave configurada, o chatbot funciona em **modo simulação** com respostas pré-definidas.
 
 ### **Regenerar Arquivos gRPC (Se Necessário):**
 ```bash
@@ -197,6 +216,49 @@ python generate_grpc.py
 
 ## 🚨 **TROUBLESHOOTING**
 
+### **"AVISO - Serviço chatbot parou inesperadamente"**
+
+**Problema:** O servidor chatbot inicia mas para logo em seguida.
+
+**Causas e Soluções:**
+
+#### **1. Dependência google-generativeai não instalada**
+```bash
+# Instalar a biblioteca
+pip install google-generativeai
+
+# Ou reinstalar todas as dependências
+pip install -r requirements.txt
+```
+
+#### **2. Arquivo .env não configurado (OPCIONAL)**
+```bash
+# O chatbot funciona SEM o arquivo .env (em modo simulação)
+# Mas se você criou um .env com erro, delete ou corrija-o:
+
+# Windows
+del .env
+
+# Linux/Mac
+rm .env
+```
+
+#### **3. Verificar se o chatbot está funcionando isoladamente**
+```bash
+# Testar apenas o chatbot
+python grpc_services/chatbot_server.py
+
+# Deve aparecer:
+# "⚠️ GEMINI_API_KEY não configurada - usando respostas simuladas"
+# "Chatbot Service iniciando na porta 8082..."
+# "🧠 IA Status: em modo simulação"
+```
+
+#### **4. Verificar logs de erro**
+Ao executar `grpc_main_windows.py`, se o chatbot parar, o erro será mostrado. Verifique a saída completa no terminal.
+
+---
+
 ### **"Connection refused"**
 1. Verifique se o servidor está rodando
 2. Confirme as portas (8081-8085)
@@ -205,9 +267,11 @@ python generate_grpc.py
 ### **"Port already in use"**
 ```bash
 # Windows
+netstat -ano | findstr :8082
 taskkill //PID [número_do_pid] //F
 
 # Linux/Mac
+lsof -i :8082
 kill -9 [pid]
 ```
 

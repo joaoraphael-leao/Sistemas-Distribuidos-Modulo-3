@@ -6,27 +6,39 @@ Implementação otimizada e limpa
 
 import sys
 import os
-from dotenv import load_dotenv
-import google.generativeai as gemini
 import grpc
 from concurrent import futures
 import time
 
-# Configuração de ambiente
-load_dotenv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env'))
+# Configuração do caminho para imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Imports gRPC
 from grpc_services import services_pb2, services_pb2_grpc
 
-# Configuração Gemini AI
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-if GEMINI_API_KEY:
-    gemini.configure(api_key=GEMINI_API_KEY)
-    model = gemini.GenerativeModel("gemini-2.0-flash")
-else:
-    model = None
-    print("⚠️  GEMINI_API_KEY não configurada - usando respostas simuladas")
+# Tentativa de carregar dotenv e Gemini AI
+model = None
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env'))
+    
+    try:
+        import google.generativeai as gemini
+        GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+        if GEMINI_API_KEY:
+            gemini.configure(api_key=GEMINI_API_KEY)
+            model = gemini.GenerativeModel("gemini-2.0-flash")
+            print("[OK] Gemini AI configurada com sucesso")
+        else:
+            print("[AVISO] GEMINI_API_KEY nao configurada - usando respostas simuladas")
+    except ImportError as e:
+        print("[AVISO] google-generativeai nao instalado - usando respostas simuladas")
+        print("        Para instalar: pip install google-generativeai")
+except ImportError:
+    print("[AVISO] python-dotenv nao instalado - continuando sem arquivo .env")
+except Exception as e:
+    print(f"[AVISO] Erro ao configurar ambiente: {e}")
+    print("        Continuando em modo simulacao...")
 
 class ChatbotServiceServicer(services_pb2_grpc.ChatbotServiceServicer):
     """Implementação otimizada do serviço de Chatbot"""
@@ -61,17 +73,17 @@ class ChatbotServiceServicer(services_pb2_grpc.ChatbotServiceServicer):
         """Registra métricas de interação"""
         try:
             insights_response = services_pb2.StatusResponse(
-                message="📊 Métricas registradas com sucesso"
+                message="[OK] Metricas registradas com sucesso"
             )
             
             return services_pb2.RegisterMetricsResponse(
-                message=f"Métricas da interação {request.id_interacao} processadas",
+                message=f"Metricas da interacao {request.id_interacao} processadas",
                 id_interacao=request.id_interacao,
                 insights_servico=insights_response
             )
         except Exception as e:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details(f'Erro ao registrar métricas: {str(e)}')
+            context.set_details(f'Erro ao registrar metricas: {str(e)}')
             return services_pb2.RegisterMetricsResponse()
     
     def _process_question(self, duvida, aula_contexto):
@@ -82,19 +94,19 @@ class ChatbotServiceServicer(services_pb2_grpc.ChatbotServiceServicer):
                 response = model.generate_content(prompt)
                 return response.text
             except Exception as e:
-                return f"⚠️ Erro na IA: {str(e)}\n\nResposta alternativa: Para '{duvida}' no contexto de '{aula_contexto}', recomendo consultar a documentação oficial e praticar com exemplos."
+                return f"[ERRO] Erro na IA: {str(e)}\n\nResposta alternativa: Para '{duvida}' no contexto de '{aula_contexto}', recomendo consultar a documentacao oficial e praticar com exemplos."
         else:
             # Modo simulação otimizado
-            return f"""📚 Resposta simulada para sua dúvida sobre '{duvida}':
+            return f"""[SIMULACAO] Resposta simulada para sua duvida sobre '{duvida}':
 
-No contexto de '{aula_contexto}', esta é uma excelente pergunta! 
+No contexto de '{aula_contexto}', esta e uma excelente pergunta! 
 
-💡 Sugestões:
-1. Consulte a documentação oficial
+Sugestoes:
+1. Consulte a documentacao oficial
 2. Pratique com exemplos simples
 3. Use ambientes de desenvolvimento interativos
 
-⚠️ Para respostas reais da IA, configure GEMINI_API_KEY no arquivo .env"""
+NOTA: Para respostas reais da IA Gemini, configure GEMINI_API_KEY no arquivo .env"""
 
 def serve():
     """Inicia o servidor gRPC otimizado"""
@@ -104,9 +116,11 @@ def serve():
     listen_addr = 'localhost:8082'
     server.add_insecure_port(listen_addr)
     
+    print("=" * 50)
     print("Chatbot Service iniciando na porta 8082...")
-    ai_info = "com Gemini AI" if model else "em modo simulação"
-    print(f"🧠 IA Status: {ai_info}")
+    ai_info = "com Gemini AI" if model else "em modo simulacao"
+    print(f"IA Status: {ai_info}")
+    print("=" * 50)
     
     server.start()
     
