@@ -1,32 +1,43 @@
+#!/usr/bin/env python3
+"""
+CPAR Service - gRPC Server
+Gestão de agendamentos e notificações
+"""
+
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import grpc
 from concurrent import futures
 import time
 
-# Importar os arquivos gRPC gerados
-from grpc_services import services_pb2
-from grpc_services import services_pb2_grpc
+# Configuração de ambiente
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Imports gRPC
+from grpc_services import services_pb2, services_pb2_grpc
 
 class CPARServiceServicer(services_pb2_grpc.CPARServiceServicer):
-    def GetCPARStatus(self, request, context):
+    """Implementação otimizada do serviço CPAR"""
+    
+    def GetStatus(self, request, context):
+        """Status do serviço"""
         return services_pb2.StatusResponse(
-            message="Servico de CPAR conectado via gRPC -> Endpoint GetCPARStatus"
+            message="📅 CPAR Service ativo - Gestão de agendamentos"
         )
     
     def NotifySchedule(self, request, context):
+        """Notifica sobre agendamentos"""
         try:
-            message = f"Servico de CPAR enviando notificacao via gRPC de agendamento {request.id_agendamento}"
+            # Processamento do agendamento
+            agendamento_info = f"📅 Agendamento {request.id_agendamento} processado"
             
-            # Simular resposta do serviço de notificações
+            # Simulação de integração com notificações
             notificacao_response = services_pb2.StatusResponse(
-                message="Servico de Notificacoes via gRPC"
+                message="📱 Notificação de agendamento enviada"
             )
             
             return services_pb2.NotifyScheduleResponse(
-                message=message,
+                message=agendamento_info,
                 id_agendamento=request.id_agendamento,
                 notificacao_servico=notificacao_response
             )
@@ -36,20 +47,23 @@ class CPARServiceServicer(services_pb2_grpc.CPARServiceServicer):
             return services_pb2.NotifyScheduleResponse()
 
 def serve():
+    """Inicia o servidor gRPC otimizado"""
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     services_pb2_grpc.add_CPARServiceServicer_to_server(CPARServiceServicer(), server)
     
-    # Usar porta comum para rede corporativa
     listen_addr = 'localhost:8083'
     server.add_insecure_port(listen_addr)
     
-    print(f"Servidor gRPC de CPAR iniciando na porta 8083...")
+    print("CPAR Service iniciando na porta 8083...")
+    print("Integrado com: Notificações")
+    
     server.start()
     
     try:
         while True:
-            time.sleep(86400)  # 1 dia
+            time.sleep(86400)
     except KeyboardInterrupt:
+        print("\nParando CPAR Service...")
         server.stop(0)
 
 if __name__ == '__main__':
