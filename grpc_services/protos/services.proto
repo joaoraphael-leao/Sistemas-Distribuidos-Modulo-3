@@ -114,6 +114,7 @@ service NotificacoesService {
 
 service InsightsService {
   rpc GetInsightsStatus(Empty) returns (StatusResponse);
+  rpc RegisterMetrics(RegisterMetricsRequest) returns (RegisterMetricsResponse);
 }
 
 service IdentidadeService {

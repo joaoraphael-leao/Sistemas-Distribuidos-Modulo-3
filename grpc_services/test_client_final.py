@@ -21,7 +21,8 @@ class FinalGRPCClient:
         self.services = {
             'chatbot': {'port': 8082, 'stub_class': services_pb2_grpc.ChatbotServiceStub},
             'cursos': {'port': 8081, 'stub_class': services_pb2_grpc.CursosServiceStub},
-            'cpar': {'port': 8083, 'stub_class': services_pb2_grpc.CPARServiceStub}
+            'cpar': {'port': 8083, 'stub_class': services_pb2_grpc.CPARServiceStub},
+            'insights': {'port': 8085, 'stub_class': services_pb2_grpc.InsightsServiceStub}
         }
         self.channels = {}
         self.stubs = {}
@@ -61,6 +62,9 @@ class FinalGRPCClient:
             
             if 'cpar' in self.stubs:
                 self._test_cpar()
+            
+            if 'insights' in self.stubs:
+                self._test_insights()
         
         # Resumo final
         self._print_final_summary(active_services)
@@ -79,6 +83,8 @@ class FinalGRPCClient:
                     response = stub.GetCursosStatus(services_pb2.Empty(), timeout=5)
                 elif service_name == 'cpar':
                     response = stub.GetCPARStatus(services_pb2.Empty(), timeout=5)
+                elif service_name == 'insights':
+                    response = stub.GetInsightsStatus(services_pb2.Empty(), timeout=5)
                 else:
                     continue
                     
@@ -121,6 +127,17 @@ class FinalGRPCClient:
             request = services_pb2.NotifyScheduleRequest(id_agendamento="test_456")
             response = self.stubs['cpar'].NotifySchedule(request, timeout=5)
             print(f"   OK - Notificação: {response.message}")
+        except Exception as e:
+            print(f"   ERRO: {e}")
+    
+    def _test_insights(self):
+        """Testa funcionalidades do insights"""
+        print(f"\nINSIGHTS:")
+        try:
+            # Testa registro de métricas
+            request = services_pb2.RegisterMetricsRequest(id_interacao="test_insights_123")
+            response = self.stubs['insights'].RegisterMetrics(request, timeout=5)
+            print(f"   OK - Métrica registrada: {response.message}")
         except Exception as e:
             print(f"   ERRO: {e}")
     

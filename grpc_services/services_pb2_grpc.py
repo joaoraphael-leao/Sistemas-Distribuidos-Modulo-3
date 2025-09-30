@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from grpc_services import services_pb2 as services__pb2
+from . import services_pb2 as services__pb2
 
 
 class CursosServiceStub(object):
@@ -497,12 +497,23 @@ class InsightsServiceStub(object):
                 request_serializer=services__pb2.Empty.SerializeToString,
                 response_deserializer=services__pb2.StatusResponse.FromString,
                 )
+        self.RegisterMetrics = channel.unary_unary(
+                '/services.InsightsService/RegisterMetrics',
+                request_serializer=services__pb2.RegisterMetricsRequest.SerializeToString,
+                response_deserializer=services__pb2.RegisterMetricsResponse.FromString,
+                )
 
 
 class InsightsServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetInsightsStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RegisterMetrics(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -515,6 +526,11 @@ def add_InsightsServiceServicer_to_server(servicer, server):
                     servicer.GetInsightsStatus,
                     request_deserializer=services__pb2.Empty.FromString,
                     response_serializer=services__pb2.StatusResponse.SerializeToString,
+            ),
+            'RegisterMetrics': grpc.unary_unary_rpc_method_handler(
+                    servicer.RegisterMetrics,
+                    request_deserializer=services__pb2.RegisterMetricsRequest.FromString,
+                    response_serializer=services__pb2.RegisterMetricsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -540,6 +556,23 @@ class InsightsService(object):
         return grpc.experimental.unary_unary(request, target, '/services.InsightsService/GetInsightsStatus',
             services__pb2.Empty.SerializeToString,
             services__pb2.StatusResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RegisterMetrics(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/services.InsightsService/RegisterMetrics',
+            services__pb2.RegisterMetricsRequest.SerializeToString,
+            services__pb2.RegisterMetricsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
