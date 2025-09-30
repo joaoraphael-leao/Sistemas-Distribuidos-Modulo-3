@@ -31,7 +31,7 @@ else:
 class ChatbotServiceServicer(services_pb2_grpc.ChatbotServiceServicer):
     """Implementação otimizada do serviço de Chatbot"""
     
-    def GetStatus(self, request, context):
+    def GetChatbotStatus(self, request, context):
         """Status do serviço"""
         ai_status = "com IA Gemini" if model else "modo simulação"
         return services_pb2.StatusResponse(

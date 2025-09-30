@@ -19,7 +19,7 @@ from grpc_services import services_pb2, services_pb2_grpc
 class CursosServiceServicer(services_pb2_grpc.CursosServiceServicer):
     """Implementação otimizada do serviço de Cursos"""
     
-    def GetStatus(self, request, context):
+    def GetCursosStatus(self, request, context):
         """Status do serviço"""
         return services_pb2.StatusResponse(
             message="📚 Cursos Service ativo - Gestão de cursos e inscrições"

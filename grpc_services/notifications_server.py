@@ -25,10 +25,9 @@ class NotificationsServiceServicer(services_pb2_grpc.NotificationsServiceService
         self.notifications_sent = 0
         logging.info("Serviço de Notificações inicializado")
     
-    def GetStatus(self, request, context):
+    def GetNotificacoesStatus(self, request, context):
         """Retorna status do serviço"""
         return services_pb2.StatusResponse(
-            status="active", 
             message=f"Notificações ativas - {self.notifications_sent} notificações enviadas"
         )
     
@@ -43,9 +42,7 @@ class NotificationsServiceServicer(services_pb2_grpc.NotificationsServiceService
             logging.info(f"📤 Notificação enviada para usuário {request.id_usuario}: {request.message[:50]}...")
             
             return services_pb2.SendNotificationResponse(
-                success=True,
-                message=f"Notificação enviada com sucesso [ID: {notification_id}]",
-                notification_id=notification_id
+                message=f"Notificação enviada com sucesso [ID: {notification_id}]"
             )
             
         except Exception as e:
@@ -53,7 +50,6 @@ class NotificationsServiceServicer(services_pb2_grpc.NotificationsServiceService
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(f"Erro interno: {str(e)}")
             return services_pb2.SendNotificationResponse(
-                success=False,
                 message=f"Erro ao enviar notificação: {str(e)}"
             )
 

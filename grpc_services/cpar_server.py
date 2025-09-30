@@ -19,7 +19,7 @@ from grpc_services import services_pb2, services_pb2_grpc
 class CPARServiceServicer(services_pb2_grpc.CPARServiceServicer):
     """Implementação otimizada do serviço CPAR"""
     
-    def GetStatus(self, request, context):
+    def GetCPARStatus(self, request, context):
         """Status do serviço"""
         return services_pb2.StatusResponse(
             message="📅 CPAR Service ativo - Gestão de agendamentos"
