@@ -3,5 +3,8 @@ Flask-CORS==4.0.0
 requests==2.31.0
 python-dotenv==1.0.0
 google-generativeai
+grpcio==1.59.0
+grpcio-tools==1.59.0
+protobuf==4.24.4
 
 

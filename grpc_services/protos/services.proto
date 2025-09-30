@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package services;
+
+// Mensagens comuns
+message Empty {}
+
+message StatusResponse {
+  string message = 1;
+}
+
+message ErrorResponse {
+  string error = 1;
+  int32 code = 2;
+}
+
+// Mensagens para Cursos
+message GetUserCoursesRequest {
+  string id_usuario = 1;
+}
+
+message Course {
+  int32 id = 1;
+  string nome = 2;
+}
+
+message GetUserCoursesResponse {
+  string message = 1;
+  repeated Course cursos_inscritos = 2;
+}
+
+message GetCourseMediaRequest {
+  string id_curso = 1;
+}
+
+message GetCourseMediaResponse {
+  string midia_curso = 1;
+}
+
+message AskQuestionRequest {
+  string id_curso = 1;
+  string aula_contexto = 2;
+  string duvida = 3;
+}
+
+message AskQuestionResponse {
+  string resposta = 1;
+}
+
+message SendNotificationRequest {
+  string id_usuario = 1;
+  string message = 2;
+}
+
+message SendNotificationResponse {
+  string message = 1;
+  StatusResponse notificacao_servico = 2;
+}
+
+// Mensagens para Chatbot
+message ChatbotDuvidaRequest {
+  string aula_contexto = 1;
+  string duvida = 2;
+}
+
+message ChatbotDuvidaResponse {
+  string resposta = 1;
+}
+
+message RegisterMetricsRequest {
+  string id_interacao = 1;
+}
+
+message RegisterMetricsResponse {
+  string message = 1;
+  string id_interacao = 2;
+  StatusResponse insights_servico = 3;
+}
+
+// Mensagens para CPAR
+message NotifyScheduleRequest {
+  string id_agendamento = 1;
+}
+
+message NotifyScheduleResponse {
+  string message = 1;
+  string id_agendamento = 2;
+  StatusResponse notificacao_servico = 3;
+}
+
+// Serviços gRPC
+service CursosService {
+  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetUserCourses(GetUserCoursesRequest) returns (GetUserCoursesResponse);
+  rpc GetCourseMedia(GetCourseMediaRequest) returns (GetCourseMediaResponse);
+  rpc AskQuestion(AskQuestionRequest) returns (AskQuestionResponse);
+  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse);
+}
+
+service ChatbotService {
+  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc ResolveDuvida(ChatbotDuvidaRequest) returns (ChatbotDuvidaResponse);
+  rpc RegisterMetrics(RegisterMetricsRequest) returns (RegisterMetricsResponse);
+}
+
+service CPARService {
+  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc NotifySchedule(NotifyScheduleRequest) returns (NotifyScheduleResponse);
+}
+
+service NotificacoesService {
+  rpc GetStatus(Empty) returns (StatusResponse);
+}
+
+service InsightsService {
+  rpc GetStatus(Empty) returns (StatusResponse);
+}
+
+service IdentidadeService {
+  rpc GetStatus(Empty) returns (StatusResponse);
+}
+
+service PagamentosService {
+  rpc GetStatus(Empty) returns (StatusResponse);
+}
+
+service MidiaConteudoService {
+  rpc GetStatus(Empty) returns (StatusResponse);
+  rpc GetMedia(GetCourseMediaRequest) returns (GetCourseMediaResponse);
+}
